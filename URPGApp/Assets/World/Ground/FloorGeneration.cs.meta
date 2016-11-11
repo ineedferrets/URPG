@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 65c55a684433ff24da707ff4a2b2966d
+timeCreated: 1475337906
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - solidSprite: {fileID: 21300000, guid: 6af3a0c7c19b22d4f902db057e81ec3e, type: 3}
+  - emptySprite: {fileID: 21300000, guid: a8c8f17e99f09a34691c34aafed738f4, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
