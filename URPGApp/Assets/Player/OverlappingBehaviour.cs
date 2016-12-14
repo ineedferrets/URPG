@@ -18,8 +18,5 @@ public class OverlappingBehaviour : MonoBehaviour {
         {
             SceneManager.LoadScene("Combat");
         }
-        else
-        {
-        }
 	}
 }
