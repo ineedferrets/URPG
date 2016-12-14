@@ -8,12 +8,14 @@ public class DebugMouseSwipe : MonoBehaviour
     private Vector3 objBeginPos;
     private Vector3 objDesiredPos;
     private bool movingBool;
+    private bool touchedBool = false;
 
     // Bool for peing pulled and variables for movement
     public Sprite heroSprite;
     public float maxFreeVel = 50.0f;
     public float slingRadius = 2.0f;
     public float maxRubberVel = 2.0f;
+    public UnityEngine.UI.Text debug;
 
     // Use this for initialization
     void Start()
@@ -23,19 +25,39 @@ public class DebugMouseSwipe : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Moving: " + movingBool);
+        switch (touchedBool)
+        {
+            case true:
+                debug.text = "Touched\n";
+                break;
+            case false:
+                debug.text = "Untouched\n";
+                break;
+        }
+
+        switch (movingBool)
+        {
+            case true:
+                debug.text += "Moving";
+                break;
+            case false:
+                debug.text += "Not Moving";
+                break;
+        }
 
         // Where the user touches and the pulling vector from the user
         Vector3 touchWorldPos;
         Vector3 pullVec;
 
-        // Stops limit of movement
+        // Limits how minimum speed
         if (transform.GetComponent<Rigidbody2D>().velocity.magnitude < 0.2f)
             transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        if (Mathf.Abs(transform.GetComponent<Rigidbody2D>().angularVelocity) < 2f)
+        if (Mathf.Abs(transform.GetComponent<Rigidbody2D>().angularVelocity) < 10f)
             transform.GetComponent<Rigidbody2D>().angularVelocity = 0f;
         if (transform.GetComponent<Rigidbody2D>().velocity.magnitude == 0f && Mathf.Abs(transform.GetComponent<Rigidbody2D>().angularVelocity) < 2f)
             movingBool = false;
+        else if (!touchedBool)
+            movingBool = true;
 
         if (movingBool)
             return;
@@ -56,9 +78,11 @@ public class DebugMouseSwipe : MonoBehaviour
             Color tmp = heroGhost.GetComponent<SpriteRenderer>().color;
             tmp.a = 0.5f;
             heroGhost.gameObject.GetComponent<SpriteRenderer>().color = tmp;
+
+            touchedBool = true;
             return;
         }
-        else if (Input.GetMouseButton(0))
+        else if (Input.GetMouseButton(0) && touchedBool)
         {
             touchWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
             touchWorldPos.z = 0;
@@ -69,7 +93,7 @@ public class DebugMouseSwipe : MonoBehaviour
             transform.GetComponent<Rigidbody2D>().velocity = maxRubberVel * Vector3.Distance(transform.position, objDesiredPos) * pullVec;
         }
 
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0) && touchedBool)
         {
             GameObject heroGhost = GameObject.Find("heroGhost");
             Destroy(heroGhost);
@@ -78,7 +102,7 @@ public class DebugMouseSwipe : MonoBehaviour
             if (Vector3.Distance(touchWorldPos, touchBeginPos) < 0.2) { transform.position = objBeginPos; transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero; return; }
             pullVec = transform.position - objBeginPos;
             transform.GetComponent<Rigidbody2D>().velocity = maxFreeVel * (-pullVec / slingRadius);
-            movingBool = true;
+            touchedBool = false;
         }
 
     }
