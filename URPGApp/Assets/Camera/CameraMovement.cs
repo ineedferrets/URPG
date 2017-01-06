@@ -26,7 +26,7 @@ public class CameraMovement : MonoBehaviour {
 
         var cameraYDirection = Mathf.Clamp(playerYPos - worldTargetYPosition, 0, proxRadius)/proxRadius;
 
-        if (!playerObj.GetComponent<CatapultSwipe>().pulled && playerObj.GetComponent<Rigidbody2D>().velocity.y >= 0)
+        if (!playerObj.GetComponent<DebugMouseSwipe>().touchedBool && playerObj.GetComponent<Rigidbody2D>().velocity.y >= 0)
             transform.position += new Vector3(0, camMaxVel * cameraYDirection, 0);
 	}
 }

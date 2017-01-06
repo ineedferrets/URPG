@@ -7,15 +7,14 @@ public class DebugMouseSwipe : MonoBehaviour
     private Vector3 touchBeginPos;
     private Vector3 objBeginPos;
     private Vector3 objDesiredPos;
-    private bool movingBool;
-    private bool touchedBool = false;
 
     // Bool for peing pulled and variables for movement
     public Sprite heroSprite;
     public float maxFreeVel = 50.0f;
     public float slingRadius = 2.0f;
     public float maxRubberVel = 2.0f;
-    public UnityEngine.UI.Text debug;
+    public bool movingBool;
+    public bool touchedBool = false;
 
     // Use this for initialization
     void Start()
@@ -25,26 +24,6 @@ public class DebugMouseSwipe : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (touchedBool)
-        {
-            case true:
-                debug.text = "Touched\n";
-                break;
-            case false:
-                debug.text = "Untouched\n";
-                break;
-        }
-
-        switch (movingBool)
-        {
-            case true:
-                debug.text += "Moving";
-                break;
-            case false:
-                debug.text += "Not Moving";
-                break;
-        }
-
         // Where the user touches and the pulling vector from the user
         Vector3 touchWorldPos;
         Vector3 pullVec;

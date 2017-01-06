@@ -3,51 +3,30 @@ using System.Collections;
 
 public class MonsterBehaviour : MonoBehaviour {
 
-    public int maxMonstInt;
-    public Sprite monstSprite;
+    private float timer = 0;
+    private float timeBetweenAttacks;
 
-    private int monsterInt;
-    private Vector2 screenWorldOrigin;
-    private Vector2 screenWorldBounds;
+    void Start ()
+    {
+        timeBetweenAttacks = Random.Range(0.1f, 1.0f);
+    }
 
-	// Use this for initialization
-	void Start () {
-        screenWorldOrigin = new Vector2(Camera.main.ScreenToWorldPoint(new Vector2(0,0)).x, Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).y);
-        screenWorldBounds.x = Vector2.Distance(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)), Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)));
-        screenWorldBounds.y = Vector2.Distance(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)), Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height)));
-
-        monsterInt = Random.Range(1, maxMonstInt+1);
-
-        for (int i = 0; i < monsterInt; i++)
-        {
-            GameObject tmp = new GameObject();
-            tmp.name = "monster";
-            tmp.AddComponent<SpriteRenderer>().sprite = monstSprite;
-            tmp.AddComponent<BoxCollider2D>();
-            tmp.transform.parent = transform;
-            tmp.transform.position = new Vector3(
-                screenWorldOrigin.x + tmp.GetComponent<SpriteRenderer>().bounds.size.x/2 + (screenWorldBounds.x - tmp.GetComponent<SpriteRenderer>().bounds.size.x) * Random.Range(0.0f, 1.0f),
-                screenWorldOrigin.y + tmp.GetComponent<SpriteRenderer>().bounds.size.y/2 + (screenWorldBounds.y - tmp.GetComponent<SpriteRenderer>().bounds.size.y) * Random.Range(0.0f, 1.0f),
-                4);
-        }
-	}
-	
 	// Update is called once per frame
 	void Update () {
-	if (Input.GetMouseButtonDown(0))
+        timer += Time.deltaTime;
+        if (timer >= timeBetweenAttacks)
         {
-
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Debug.Log(ray);
-            Physics.Raycast(ray, out hit);
-
-            Debug.Log(hit.transform);
-
-            if (hit.transform.name.Contains("monster"))
-            {
-                Destroy(hit.transform.gameObject);
-            }
+            Attack(2);
+            timer = 0;
         }
 	}
+
+    void Attack(int amount)
+    {
+        GameObject.Find("Player").GetComponent<PlayerStats>().Damage(amount);
+    }
+
+    public void Death () {
+        GameObject.Find("Player").GetComponent<PlayerStats>().playerCombatScore += 10;
+    }
 }

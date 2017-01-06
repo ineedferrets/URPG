@@ -52,7 +52,7 @@ public class FloorGeneration : MonoBehaviour {
                 newTile.AddComponent<SpriteRenderer>().sprite = solidSprite;
                 newTile.GetComponent<SpriteRenderer>().color = tileTypeColors[enumTileTypes.Grass] + new Color(Random.value/50, Random.value / 50, Random.value / 50);
                 newTile.transform.position = tilePos;
-                newTile.transform.parent = GameObject.Find("Landscape").transform;
+                newTile.transform.parent = transform;
                 newTile.name = "grass1";
                 rowTiles.Add(newTile);
             }
@@ -97,7 +97,7 @@ public class FloorGeneration : MonoBehaviour {
                     newTile.AddComponent<SpriteRenderer>().sprite = solidSprite;
                     newTile.GetComponent<SpriteRenderer>().color = tileTypeColors[enumTileTypes.Grass] + new Color(Random.value / 50f, Random.value / 50f, Random.value / 50f);
                     newTile.transform.position = tilePos;
-                    newTile.transform.parent = GameObject.Find("Landscape").transform;
+                    newTile.transform.parent = transform;
                     newTile.name = "grass1";
                     rowTiles.Add(newTile);
                 }

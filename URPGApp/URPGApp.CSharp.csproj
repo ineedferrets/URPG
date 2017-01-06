@@ -69,9 +69,11 @@
     <Compile Include="Assets\Camera\CameraMovement.cs" />
     <Compile Include="Assets\Camera\SpawnBoundaries.cs" />
     <Compile Include="Assets\Combat\MonsterBehaviour.cs" />
-    <Compile Include="Assets\Player\CatapultSwipe.cs" />
+    <Compile Include="Assets\Combat\MonsterSpawner.cs" />
     <Compile Include="Assets\Player\DebugMouseSwipe.cs" />
     <Compile Include="Assets\Player\OverlappingBehaviour.cs" />
+    <Compile Include="Assets\Player\PlayerStats.cs" />
+    <Compile Include="Assets\World\Caves\CaveMonsterInformation.cs" />
     <Compile Include="Assets\World\Caves\CaveSpawner.cs" />
     <Compile Include="Assets\World\Ground\FloorGeneration.cs" />
   </ItemGroup>
