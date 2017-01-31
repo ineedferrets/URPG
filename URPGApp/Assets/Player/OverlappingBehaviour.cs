@@ -9,18 +9,19 @@ public class OverlappingBehaviour : MonoBehaviour {
     public int maxMonstInt;
     public Vector3 cameraOriginalPosition;
 
+    private Vector2 lastVel = Vector2.zero;
+
 	// Use this for initialization
 	void Start () {
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (transform.GetComponent<Rigidbody2D>().velocity == Vector2.zero)
+        if (lastVel != Vector2.zero && transform.GetComponent<Rigidbody2D>().velocity == Vector2.zero)
         {
             RaycastHit hit;
-            Physics.Raycast(transform.position, Vector3.forward, out hit);
 
-            if (hit.transform.name.Contains("Cave") && transform.GetComponent<Rigidbody2D>().velocity == Vector2.zero)
+            if (Physics.Raycast(transform.position, Vector3.forward, out hit) && hit.transform.name.Contains("Cave") && transform.GetComponent<Rigidbody2D>().velocity == Vector2.zero)
             {
                 hit.transform.name = "Conquered";
                 hit.transform.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.3f);
@@ -35,5 +36,6 @@ public class OverlappingBehaviour : MonoBehaviour {
                 transform.GetComponent<OverlappingBehaviour>().enabled = false;
             }
         }
+        lastVel = transform.GetComponent<Rigidbody2D>().velocity;
 	}
 }

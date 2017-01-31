@@ -10,7 +10,7 @@ public class FloorGeneration : MonoBehaviour {
     private Vector2 tileWorldBounds;
     private Vector2 screenWorldBounds;
     private Vector2 tilesFit;
-    private float tileMaxAboveScreen = 10.0f;
+    private float tileMaxAboveScreen = 4.0f;
     private enum enumTileTypes
     {
         Grass,

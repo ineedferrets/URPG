@@ -32,7 +32,7 @@ public class MonsterSpawner : MonoBehaviour {
             tmp.transform.position = new Vector3(
                 screenWorldOrigin.x + tmp.GetComponent<SpriteRenderer>().bounds.size.x / 2 + (screenWorldBounds.x - tmp.GetComponent<SpriteRenderer>().bounds.size.x) * Random.Range(0.0f, 1.0f),
                 screenWorldOrigin.y + tmp.GetComponent<SpriteRenderer>().bounds.size.y / 2 + (screenWorldBounds.y - tmp.GetComponent<SpriteRenderer>().bounds.size.y) * Random.Range(0.0f, 1.0f),
-                4);
+                4 + Random.Range(-1.0f,1.0f));
             monstArr.Add(tmp);
         }
     }
@@ -43,9 +43,8 @@ public class MonsterSpawner : MonoBehaviour {
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Physics.Raycast(ray, out hit);
 
-            if (hit.transform.name.Contains("monster"))
+            if (Physics.Raycast(ray, out hit) && hit.transform.name.Contains("monster"))
             {
                 hit.transform.GetComponent<MonsterBehaviour>().Death();
                 monstArr.Remove(hit.transform.gameObject);
